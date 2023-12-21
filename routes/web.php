@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Example Routes
-Route::view('/', 'landing');
+Route::get('/', function () {
+    return redirect()->route('dashboard.index');
+});
+
 Route::prefix('/dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::get('/list', [DashboardController::class, 'list'])->name('list');
