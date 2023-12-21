@@ -13,7 +13,7 @@ export default defineConfig({
                 'resources/sass/codebase/themes/pulse.scss',
                 'resources/js/codebase/app.js',
                 'resources/js/app.js',
-                'resources/js/pages/datatables.js',
+                'resources/js/pages/dashboard.js',
             ],
             refresh: true,
         }),
