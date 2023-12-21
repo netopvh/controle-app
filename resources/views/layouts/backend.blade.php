@@ -7,15 +7,14 @@
 
     <title>Sistema de Controle</title>
 
-    <meta name="description" content="Codebase - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave">
-    <meta name="author" content="pixelcave">
+    <meta name="description" content="Sistema para controle de produtos de produção">
+    <meta name="author" content="Creative Mobile">
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph Meta -->
-    <meta property="og:title" content="Codebase - Bootstrap 5 Admin Template &amp; UI Framework">
-    <meta property="og:site_name" content="Codebase">
-    <meta property="og:description"
-        content="Codebase - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave">
+    <meta property="og:title" content="Sistema para controle de produtos de produção">
+    <meta property="og:site_name" content="Creative Mobile">
+    <meta property="og:description" content="Sistema para controle de produtos de produção">
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
     <meta property="og:image" content="">
