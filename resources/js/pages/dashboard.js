@@ -96,11 +96,11 @@ class pageDashboard {
           defaultContent: ''
         },
         { data: 'date', name: 'date' },
-        { data: 'delivery_date', name: 'delivery_date' },
         { data: 'number', name: 'number' },
         { data: 'customer.name', name: 'customer.name' },
         { data: 'status', name: 'status' },
         { data: 'employee', name: 'employee' },
+        { data: 'delivery_date', name: 'delivery_date' },
         { data: 'action', name: 'action', orderable: false, searchable: false}
       ],
     });
