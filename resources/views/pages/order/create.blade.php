@@ -134,9 +134,17 @@
                             </table>
                         </div>
                     </div>
-                    <div class="d-flex row mb-2">
-                        <button type="submit" class="btn btn-success col-md-2">Salvar</button>
-                        <a class="btn btn-warning col-md-2 ms-1" href="{{ route('dashboard.index') }}">Voltar</a>
+                    <div class="d-flex flex-row justify-content-end gap-1 my-4">
+                        <div>
+                            <a class="btn btn-warning" href="{{ route('dashboard.index') }}">
+                                <i class="fa fa-arrow-left opacity-50 me-1"></i>Voltar
+                            </a>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary me-1 mb-1">
+                                <i class="fa fa-check opacity-50 me-1"></i> Salvar
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
