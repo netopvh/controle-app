@@ -53,7 +53,7 @@
                                         <option></option>
                                         <!-- Required for data-placeholder attribute to work with Select2 plugin -->
                                         @foreach ($customers as $customer)
-                                            <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                            <option value="{{ $customer->id }}">{{ strtoupper($customer->name) }}</option>
                                         @endforeach
                                     </select>
                                     <button type="button" id="new-client" class="btn btn-md btn-alt-primary">Novo
