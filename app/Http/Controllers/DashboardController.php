@@ -24,6 +24,15 @@ class DashboardController extends Controller
 
         return DataTables::of($model)
             ->filter(function ($query) use ($request) {
+
+                if (trim($request->get('search')['value']) !== '') {
+                    $query->whereHas('customer', function ($query) use ($request) {
+                        $query->where('name', 'like', '%' . $request->get('search')['value'] . '%');
+                    })
+                        ->orWhere('number', 'like', '%' . $request->get('search')['value'] . '%')
+                        ->orWhere('employee', 'like', '%' . $request->get('search')['value'] . '%');
+                }
+
                 if ($request->has('status') && $request->get('status') !== 'all') {
                     $query->where('status', $request->get('status'));
                 }
@@ -31,23 +40,6 @@ class DashboardController extends Controller
                 if ($request->has('month') && $request->get('month') !== 'all') {
                     $query->whereMonth('date', $request->get('month'));
                 }
-
-                if ($request->has('search')) {
-                    $query->whereHas('customer', function ($query) use ($request) {
-                        $query->where('name', 'like', '%' . $request->get('search')['value'] . '%');
-                    })
-                        ->orWhere('number', 'like', '%' . $request->get('search')['value'] . '%')
-                        ->orWhere('employee', 'like', '%' . $request->get('search')['value'] . '%');
-                }
-                // if ($request->has('customer')) {
-                //     $query->whereHas('customer', function ($query) use ($request) {
-                //         $query->where('name', 'like', '%' . $request->get('customer') . '%');
-                //     });
-                // }
-    
-                // if ($request->has('date')) {
-                //     $query->whereDate('date', $request->get('date'));
-                // }
             })
             ->editColumn('date', function ($model) {
                 return $model->date->format('d/m/Y');
