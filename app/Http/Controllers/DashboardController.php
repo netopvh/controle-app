@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
@@ -33,12 +34,17 @@ class DashboardController extends Controller
                         ->orWhere('employee', 'like', '%' . $request->get('search')['value'] . '%');
                 }
 
-                if ($request->has('status') && $request->get('status') !== 'all') {
+                if ($request->get('status') !== 'all') {
                     $query->where('status', $request->get('status'));
                 }
 
-                if ($request->has('month') && $request->get('month') !== 'all') {
+                if ($request->get('month') !== 'all') {
                     $query->whereMonth('date', $request->get('month'));
+                }
+
+                if (trim($request->get('from')) !== '' && trim($request->get('to')) !== '') {
+                    $query->whereDate('date', '>=', Carbon::createFromFormat('d/m/Y', $request->get('from')))
+                        ->whereDate('date', '<=', Carbon::createFromFormat('d/m/Y', $request->get('to')));
                 }
             })
             ->editColumn('date', function ($model) {

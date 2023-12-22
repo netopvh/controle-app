@@ -84,6 +84,8 @@ class pageDashboard {
         data: function (d) {
           d.status = $('#filterByStatus option:selected').val();
           d.month = $('#filterByMonth option:selected').val();
+          d.from = $('#from').val();
+          d.to = $('#to').val();
         }
       },
       columns: [
@@ -109,6 +111,15 @@ class pageDashboard {
     jQuery('#filterByMonth').on('change', function () {
       table.draw();
     });
+
+    jQuery('#from').on('change', function () {
+      table.draw();
+    });
+
+    jQuery('#to').on('change', function () {
+      table.draw();
+    });
+
 
     const detailRows = [];
 
@@ -137,6 +148,7 @@ class pageDashboard {
         $('#' + id + ' td.dt-control').trigger('click');
       });
     });
+
 	}
 
 	/*
@@ -150,3 +162,4 @@ class pageDashboard {
 
 // Initialize when page loads
 Codebase.onLoad(() => pageDashboard.init());
+Codebase.helpersOnLoad(['jq-datepicker']);

@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{{ asset('js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/datatables-responsive-bs5/css/responsive.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
 @endsection
 
 @section('js')
@@ -23,6 +24,7 @@
     <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     @vite(['resources/js/pages/dashboard.js'])
 @endsection
 
@@ -84,7 +86,7 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="filterByStatus" class="fw-bold mb-1">Filtrar por Status</label>
+                                        <label for="filterByStatus" class="fw-bold mb-1">Filtrar por status</label>
                                         <select class="form-control" id="filterByStatus">
                                             <option value="all">Todos</option>
                                             <option value="aguard. aprov">Aguardando Aprovação</option>
@@ -93,9 +95,9 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="filterByMonth" class="fw-bold mb-1">Filtrar por Mês</label>
+                                        <label for="filterByMonth" class="fw-bold mb-1">Filtrar por mês</label>
                                         <select class="form-control" id="filterByMonth">
                                             <option value="all">Todos</option>
                                             <option value="01">Janeiro</option>
@@ -113,9 +115,27 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-lg-6 col-xl-4">
+                                    <div class="mb-4">
+                                        <label for="filterByMonth" class="fw-bold mb-1">Filtrar por data</label>
+                                        <div class="input-daterange input-group" data-date-format="dd/mm/yyyy"
+                                            data-week-start="1" data-autoclose="true" data-today-highlight="true">
+                                            <input type="text" class="form-control" id="from"
+                                                name="example-daterange1" placeholder="De" data-week-start="1"
+                                                data-autoclose="true" data-today-highlight="true">
+                                            <span class="input-group-text fw-semibold">
+                                                <i class="fa fa-fw fa-arrow-right"></i>
+                                            </span>
+                                            <input type="text" class="form-control" id="to"
+                                                name="example-daterange2" placeholder="Até" data-week-start="1"
+                                                data-autoclose="true" data-today-highlight="true">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </fieldset>
-                        <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive list-latest">
+                        <table
+                            class="table table-bordered table-striped table-vcenter js-dataTable-responsive list-latest">
                             <thead>
                                 <tr>
                                     <th style="width: 8%;"></th>

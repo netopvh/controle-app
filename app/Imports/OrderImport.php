@@ -30,6 +30,32 @@ class OrderImport implements ToCollection, WithHeadingRow, WithBatchInserts
                             'name' => $row['cliente']
                         ]);
 
+                        $order = $customer->orders()->where('number', $row['pedido'])->first();
+
+                        if (! $order) {
+                            $order = $customer->orders()->create([
+                                'employee' => $row['funcionario'],
+                                'date' => (gettype($row['data']) === 'string') ? Carbon::now()->format('Y-m-d') : Date::excelToDateTimeObject($row['data']),
+                                'number' => $row['pedido'],
+                                'status' => $row['status'],
+                            ]);
+
+                            $order->orderProducts()->create([
+                                'name' => $row['produto'],
+                                'qtd' => $row['quantidade'],
+                            ]);
+                        } else {
+                            $order->orderProducts()->create([
+                                'name' => $row['produto'],
+                                'qtd' => $row['quantidade'],
+                            ]);
+                        }
+
+                    }
+                } else {
+                    $order = $customer->orders()->where('number', $row['pedido'])->first();
+
+                    if (! $order) {
                         $order = $customer->orders()->create([
                             'employee' => $row['funcionario'],
                             'date' => (gettype($row['data']) === 'string') ? Carbon::now()->format('Y-m-d') : Date::excelToDateTimeObject($row['data']),
@@ -41,20 +67,12 @@ class OrderImport implements ToCollection, WithHeadingRow, WithBatchInserts
                             'name' => $row['produto'],
                             'qtd' => $row['quantidade'],
                         ]);
-
+                    } else {
+                        $order->orderProducts()->create([
+                            'name' => $row['produto'],
+                            'qtd' => $row['quantidade'],
+                        ]);
                     }
-                } else {
-                    $order = $customer->orders()->create([
-                        'employee' => $row['funcionario'],
-                        'date' => (gettype($row['data']) === 'string') ? Carbon::now()->format('Y-m-d') : Date::excelToDateTimeObject($row['data']),
-                        'number' => $row['pedido'],
-                        'status' => $row['status'],
-                    ]);
-
-                    $order->orderProducts()->create([
-                        'name' => $row['produto'],
-                        'qtd' => $row['quantidade'],
-                    ]);
                 }
             }
         }

@@ -232,7 +232,7 @@ export default class Helpers {
         }
         else { // ..else add it
           let elChild = document.createElement('span')
-          
+
           elChild.classList.add(cssClass)
           el.insertBefore(elChild, el.firstChild);
         }
@@ -389,13 +389,13 @@ export default class Helpers {
             && !e.target.parentNode.classList.contains('custom-control')) {
             let checkboxHead = table.querySelector('thead input[type=checkbox]');
             let checkbox = e.currentTarget.querySelector('input[type=checkbox]');
-            
+
             // Update row's checkbox status
             checkbox.checked = !checkbox.checked;
 
             // Update Row classes
             this.tableToolscheckRow(checkbox, checkbox.checked);
-  
+
             // Adjust checkbox in thead
             if (!checkbox.checked) {
               checkboxHead.checked = false
@@ -672,8 +672,18 @@ export default class Helpers {
     jQuery('.js-datepicker:not(.js-datepicker-enabled)').add('.input-daterange:not(.js-datepicker-enabled)').each((index, element) => {
       let el = jQuery(element);
 
+      $.fn.datepicker.dates['pt'] = {
+        days: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sabado", "Domingo"],
+        daysShort: ["Dom, ", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"],
+        daysMin: ["Do", "Se", "Te", "Qu", "Qu", "Se", "Sa", "Do"],
+        months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julio", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+        monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Dec"],
+        today: "Hoje",
+    };
+
       // Add .js-datepicker-enabled class to tag it as activated and init it
       el.addClass('js-datepicker-enabled').datepicker({
+        language: 'pt',
         weekStart: el.data('week-start') || 0,
         autoclose: el.data('autoclose') || false,
         todayHighlight: el.data('today-highlight') || false,

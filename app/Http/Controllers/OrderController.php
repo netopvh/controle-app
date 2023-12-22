@@ -25,7 +25,7 @@ class OrderController extends Controller
     public function uploadPreview(Request $request, $id)
     {
         $request->validate([
-            'preview' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'preview' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
         ], [
             'preview.required' => 'O campo arquivo é obrigatório.',
             'preview.image' => 'O campo arquivo deve ser uma imagem.',
@@ -52,7 +52,7 @@ class OrderController extends Controller
     public function uploadDesign(Request $request, $id)
     {
         $request->validate([
-            'design' => 'required|mimes:pdf|max:4096',
+            'design' => 'required|mimes:pdf|max:6144',
         ], [
             'design.required' => 'O campo arquivo é obrigatório.',
             'design.mimes' => 'O campo arquivo deve ser um PDF.',
