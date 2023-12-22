@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class DashboardController extends Controller
@@ -17,11 +18,32 @@ class DashboardController extends Controller
         return view('dashboard', compact('approved', 'waitingApproval', 'waitingArt'));
     }
 
-    public function list()
+    public function list(Request $request)
     {
         $model = Order::query()->with(['customer', 'orderProducts']);
 
+        Log::info($request->all());
+
         return DataTables::of($model)
+            ->filter(function ($query) use ($request) {
+                if ($request->has('status') && $request->get('status') !== 'all') {
+                    $query->where('status', $request->get('status'));
+                }
+
+                if ($request->has('month') && $request->get('month') !== 'all') {
+                    $query->whereMonth('date', $request->get('month'));
+                }
+
+                // if ($request->has('customer')) {
+                //     $query->whereHas('customer', function ($query) use ($request) {
+                //         $query->where('name', 'like', '%' . $request->get('customer') . '%');
+                //     });
+                // }
+    
+                // if ($request->has('date')) {
+                //     $query->whereDate('date', $request->get('date'));
+                // }
+            })
             ->editColumn('date', function ($model) {
                 return $model->date->format('d/m/Y');
             })

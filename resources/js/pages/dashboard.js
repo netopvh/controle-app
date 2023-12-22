@@ -73,14 +73,18 @@ class pageDashboard {
       processing: true,
       paging: true,
       pageLength: 10,
-      lengthMenu: [[5, 10, 20], [5, 10, 20]],
+      lengthMenu: [[5, 10, 20, 40, 60, 80, 100], [5, 10, 20, 40, 60, 80, 100]],
       autoWidth: false,
-      buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-      dom: "<'row'<'col-sm-12'<'text-center bg-body-light py-2 mb-2'B>>>" +
-              "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+      // buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+      //"<'row'<'col-sm-12'<'text-center bg-body-light py-2 mb-2'B>>>" +
+      dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
       ajax: {
         url: '/dashboard/list',
         type: 'GET',
+        data: function (d) {
+          d.status = $('#filterByStatus option:selected').val();
+          d.month = $('#filterByMonth option:selected').val();
+        }
       },
       columns: [
         {
@@ -96,6 +100,14 @@ class pageDashboard {
         { data: 'employee', name: 'employee' },
         { data: 'action', name: 'action', orderable: false, searchable: false}
       ],
+    });
+
+    jQuery('#filterByStatus').on('change', function () {
+      table.draw();
+    });
+
+    jQuery('#filterByMonth').on('change', function () {
+      table.draw();
     });
 
     const detailRows = [];
@@ -118,13 +130,13 @@ class pageDashboard {
           detailRows.push(tr.attr('id'));
         }
       }
-    })
+    });
 
     table.on('draw', function () {
       $.each(detailRows, function (i, id) {
         $('#' + id + ' td.dt-control').trigger('click');
       });
-    })
+    });
 	}
 
 	/*

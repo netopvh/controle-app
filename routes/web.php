@@ -31,6 +31,7 @@ Route::prefix('/dashboard')->name('dashboard.')->group(function () {
     Route::prefix('order')->name('order.')->group(function () {
         Route::get('/create', [OrderController::class, 'create'])->name('create');
         Route::get('/{id}', [OrderController::class, 'show'])->name('show');
+        Route::post('/{id}/update/status', [OrderController::class, 'updateStatus'])->name('update.status');
         Route::post('/{id}/upload/preview', [OrderController::class, 'uploadPreview'])->name('upload.preview');
         Route::post('/{id}/upload/design', [OrderController::class, 'uploadDesign'])->name('upload.design');
     });

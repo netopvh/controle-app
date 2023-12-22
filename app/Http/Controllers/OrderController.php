@@ -74,4 +74,25 @@ class OrderController extends Controller
             'message' => 'Design enviado com sucesso!',
         ]);
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:aprovado,aguard. aprov,aguard. arte',
+        ], [
+            'status.required' => 'O campo status é obrigatório.',
+            'status.in' => 'O campo status deve ser um dos seguintes valores: Aprovado, Aguard. Aprov, Aguard. Arte.',
+        ]);
+
+        $order = Order::query()->findOrFail($id);
+
+        $order->update([
+            'status' => $request->get('status'),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status atualizado com sucesso!',
+        ]);
+    }
 }

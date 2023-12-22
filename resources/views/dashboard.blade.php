@@ -79,7 +79,42 @@
                         </h3>
                     </div>
                     <div class="block-content block-content-full">
-                        <!-- DataTables functionality is initialized with .js-dataTable-responsive class in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
+                        <fieldset class="border px-2 pb-2 mb-2">
+                            <legend class="float-none w-auto px-4 h5">Filtros</legend>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="filterByStatus" class="fw-bold mb-1">Filtrar por Status</label>
+                                        <select class="form-control" id="filterByStatus">
+                                            <option value="all">Todos</option>
+                                            <option value="aguard. aprov">Aguardando Aprovação</option>
+                                            <option value="aguard. arte">Aguardando Arte</option>
+                                            <option value="aprovado">Aprovado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="filterByMonth" class="fw-bold mb-1">Filtrar por Mês</label>
+                                        <select class="form-control" id="filterByMonth">
+                                            <option value="all">Todos</option>
+                                            <option value="01">Janeiro</option>
+                                            <option value="02">Fevereiro</option>
+                                            <option value="03">Março</option>
+                                            <option value="04">Abril</option>
+                                            <option value="05">Maio</option>
+                                            <option value="06">Junho</option>
+                                            <option value="07">Julho</option>
+                                            <option value="08">Agosto</option>
+                                            <option value="09">Setembro</option>
+                                            <option value="10">Outubro</option>
+                                            <option value="11">Novembro</option>
+                                            <option value="12">Dezembro</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
                         <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive list-latest">
                             <thead>
                                 <tr>
@@ -88,7 +123,7 @@
                                     <th style="width: 15%;">Pedido</th>
                                     <th>Cliente</th>
                                     <th class="text-center" style="width: 15%;">Status</th>
-                                    <th class="text-center" style="width: 20%;">Responsável</th>
+                                    <th class="text-center" style="width: 20%;">Arte Finalista</th>
                                     <th class="text-center" style="width: 10%;">Ação</th>
                                 </tr>
                             </thead>

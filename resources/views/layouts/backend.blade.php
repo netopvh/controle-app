@@ -78,7 +78,7 @@
 
       'sidebar-dark page-header-dark dark-mode'   Enable dark mode (light sidebar/header is not supported with dark mode)
   -->
-    <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-dark main-content-narrow">
+    <div id="page-container" class="sidebar-o enable-page-overlay side-scroll main-content-narrow">
         <!-- Side Overlay-->
         <aside id="side-overlay">
             <!-- Side Header -->
@@ -248,6 +248,12 @@
                                     <span class="nav-main-link-name">Importar Dados</span>
                                 </a>
                             </li>
+                            <li class="nav-main-item">
+                                <a class="nav-main-link" href="#">
+                                    <i class="nav-main-link-icon fa fa-newspaper"></i>
+                                    <span class="nav-main-link-name">Relatórios</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <!-- END Side Navigation -->
@@ -320,7 +326,7 @@
                                 <!-- Toggle Side Overlay -->
                                 <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
                                 <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1"
-                                    href="javascript:void(0)" data-toggle="layout" data-action="side_overlay_toggle">
+                                    href="javascript:void(0)">
                                     <span>Configurações</span>
                                     <i class="fa fa-fw fa-wrench opacity-25"></i>
                                 </a>
@@ -434,7 +440,7 @@
                 <div class="row fs-sm">
 
                     <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
-                        Todos os direitos reservados &copy; <span data-toggle="year-copy"></span>
+                        Todos os direitos reservados &copy; Personaliza brindes - <span data-toggle="year-copy"></span>
                     </div>
                 </div>
             </div>

@@ -66,6 +66,36 @@
                     }
                 })
             });
+
+            $('.dropdown-item').click(function() {
+                var status = $(this).data('value');
+                $.ajax({
+                    url: "{{ route('dashboard.order.update.status', "$order->id") }}",
+                    method: "POST",
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        status: status
+                    },
+                    dataType: 'JSON',
+                    beforeSend: function() {
+                        $('#status-dropdown').html(
+                            '<div class="spinner-border spinner-border-sm text-white" role="status">' +
+                            '<span class="visually-hidden">Loading...</span>' +
+                            '</div>'
+                        );
+                    },
+                    success: function(data) {
+                        location.reload();
+                    },
+                    error: function(data) {
+                        console.log(data);
+                        // $('#status-dropdown').html(
+                        //     '<i class="fa fa-fw fa-chevron-down text-white me-1"></i>' +
+                        //     '<span class="d-none d-sm-inline">Alterar Status</span>'
+                        // );
+                    }
+                })
+            });
         });
     </script>
 @endsection
@@ -108,7 +138,7 @@
                             $color = 'btn-info';
                         }
                     @endphp
-                    <button type="button" class="btn {{ $color }} dropdown-toggle" id="dropdown-default-primary"
+                    <button type="button" class="btn {{ $color }} dropdown-toggle" id="status-dropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @if ($order->status == 'aprovado')
                             Aprovado
@@ -119,11 +149,11 @@
                         @endif
                     </button>
                     <div class="dropdown-menu fs-sm" aria-labelledby="dropdown-default-primary">
-                        <a class="dropdown-item" href="javascript:void(0)">Aprovado</a>
+                        <a class="dropdown-item" data-value="aprovado" href="javascript:void(0)">Aprovado</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:void(0)">Aguardando Aprov.</a>
+                        <a class="dropdown-item" data-value="aguard. aprov" href="javascript:void(0)">Aguardando Aprov.</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:void(0)">Aguardando Arte</a>
+                        <a class="dropdown-item" data-value="aguard. arte" href="javascript:void(0)">Aguardando Arte</a>
                     </div>
                 </div>
             </div>
@@ -142,6 +172,38 @@
                                 href="javascript:void(0)">{{ $order->customer->email ? $order->customer->email : 'Não cadastrado' }}</a>
                         </address>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="content-heading">Produtos</h2>
+        <div class="block block-rounded">
+            <div class="block-content block-content-full">
+                <div class="table-responsive">
+                    <table class="table table-borderless table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th style="width: 100px;">ID</th>
+                                <th>Produto</th>
+                                <th class="text-center">Quantidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($order->orderProducts as $product)
+                                <tr>
+                                    <td>
+                                        {{ $product->id }}
+                                    </td>
+                                    <td>
+                                        {{ strtoupper($product->name) }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $product->qtd }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -397,38 +459,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <h2 class="content-heading">Produtos</h2>
-        <div class="block block-rounded">
-            <div class="block-content block-content-full">
-                <div class="table-responsive">
-                    <table class="table table-borderless table-striped mb-0">
-                        <thead>
-                            <tr>
-                                <th style="width: 100px;">ID</th>
-                                <th>Produto</th>
-                                <th class="text-center">Quantidade</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($order->orderProducts as $product)
-                                <tr>
-                                    <td>
-                                        {{ $product->id }}
-                                    </td>
-                                    <td>
-                                        {{ strtoupper($product->name) }}
-                                    </td>
-                                    <td class="text-center">
-                                        {{ $product->qtd }}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
