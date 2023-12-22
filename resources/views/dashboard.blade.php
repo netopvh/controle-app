@@ -139,10 +139,11 @@
                             <thead>
                                 <tr>
                                     <th style="width: 8%;"></th>
-                                    <th style="width: 12%;">Data</th>
-                                    <th style="width: 15%;">Pedido</th>
+                                    <th style="width: 120px;">Data</th>
+                                    <th style="width: 120px;">Entrega</th>
+                                    <th style="width: 100px;">Pedido</th>
                                     <th>Cliente</th>
-                                    <th class="text-center" style="width: 15%;">Status</th>
+                                    <th class="text-center" style="width: 110px">Status</th>
                                     <th class="text-center" style="width: 20%;">Arte Finalista</th>
                                     <th class="text-center" style="width: 10%;">Ação</th>
                                 </tr>

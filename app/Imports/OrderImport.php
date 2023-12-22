@@ -33,11 +33,16 @@ class OrderImport implements ToCollection, WithHeadingRow, WithBatchInserts
                         $order = $customer->orders()->where('number', $row['pedido'])->first();
 
                         if (! $order) {
+
+                            $dateExplode = explode('-', $row['entrega']);
+                            $deliveryDate = date("Y") . '-' . $dateExplode[1] . '-' . $dateExplode[0];
+
                             $order = $customer->orders()->create([
                                 'employee' => $row['funcionario'],
                                 'date' => (gettype($row['data']) === 'string') ? Carbon::now()->format('Y-m-d') : Date::excelToDateTimeObject($row['data']),
                                 'number' => $row['pedido'],
                                 'status' => $row['status'],
+                                'delivery_date' => $deliveryDate,
                             ]);
 
                             $order->orderProducts()->create([
@@ -56,11 +61,15 @@ class OrderImport implements ToCollection, WithHeadingRow, WithBatchInserts
                     $order = $customer->orders()->where('number', $row['pedido'])->first();
 
                     if (! $order) {
+                        $dateExplode = explode('-', $row['entrega']);
+                        $deliveryDate = date("Y") . '-' . $dateExplode[1] . '-' . $dateExplode[0];
+
                         $order = $customer->orders()->create([
                             'employee' => $row['funcionario'],
                             'date' => (gettype($row['data']) === 'string') ? Carbon::now()->format('Y-m-d') : Date::excelToDateTimeObject($row['data']),
                             'number' => $row['pedido'],
                             'status' => $row['status'],
+                            'delivery_date' => $deliveryDate,
                         ]);
 
                         $order->orderProducts()->create([

@@ -13,6 +13,7 @@ class Order extends Model
         'customer_id',
         'employee',
         'date',
+        'delivery_date',
         'number',
         'status',
         'preview',
@@ -21,6 +22,7 @@ class Order extends Model
 
     protected $casts = [
         'date' => 'datetime',
+        'delivery_date' => 'datetime',
     ];
 
     public function customer()

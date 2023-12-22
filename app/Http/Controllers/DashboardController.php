@@ -50,6 +50,9 @@ class DashboardController extends Controller
             ->editColumn('date', function ($model) {
                 return $model->date->format('d/m/Y');
             })
+            ->editColumn('delivery_date', function ($model) {
+                return $model->delivery_date->format('d/m/Y');
+            })
             ->editColumn('customer.name', function ($model) {
                 return strtoupper($model->customer->name);
             })
@@ -70,6 +73,9 @@ class DashboardController extends Controller
             ->addColumn('action', function ($model) {
                 return '<a href="' . route('dashboard.order.show', $model->id) . '" class="btn btn-sm btn-primary"><i class="fa fa-eye" /></a>';
             })
+            ->with('totalApproved', Order::query()->where('status', 'aprovado')->count())
+            ->with('totalWaitingApproval', Order::query()->where('status', 'aguard. aprov')->count())
+            ->with('totalWaitingArt', Order::query()->where('status', 'aguard. arte')->count())
             ->rawColumns(['status', 'action'])
             ->make(true);
     }

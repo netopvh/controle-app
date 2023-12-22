@@ -50,18 +50,15 @@ class pageDashboard {
 
     function format(d) {
       return (
-        `<table class='table table-bordered table-hover'>` +
-          `<tr>
+        `<table class='table table-bordered table-hover'><tr>
             <td class='text-uppercase'>Produto</td>
             <td class='text-uppercase'>Quantidade</td>
           </tr>` +
           d.order_products.map((item) => {
-            return `
-            <tr>
+            return `<tr>
               <td class='fw-bold text-uppercase'>${item.name}</td>
               <td>${item.qtd}</td>
-            </tr>
-            `
+            </tr>`
           })
         + `</table>`
       );
@@ -86,7 +83,10 @@ class pageDashboard {
           d.month = $('#filterByMonth option:selected').val();
           d.from = $('#from').val();
           d.to = $('#to').val();
-        }
+        },
+      },
+      drawCallback: function (settings) {
+        console.log(settings.json);
       },
       columns: [
         {
@@ -96,6 +96,7 @@ class pageDashboard {
           defaultContent: ''
         },
         { data: 'date', name: 'date' },
+        { data: 'delivery_date', name: 'delivery_date' },
         { data: 'number', name: 'number' },
         { data: 'customer.name', name: 'customer.name' },
         { data: 'status', name: 'status' },
