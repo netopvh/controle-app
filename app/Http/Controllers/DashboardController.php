@@ -22,8 +22,6 @@ class DashboardController extends Controller
     {
         $model = Order::query()->with(['customer', 'orderProducts']);
 
-        Log::info($request->all());
-
         return DataTables::of($model)
             ->filter(function ($query) use ($request) {
                 if ($request->has('status') && $request->get('status') !== 'all') {
@@ -34,6 +32,13 @@ class DashboardController extends Controller
                     $query->whereMonth('date', $request->get('month'));
                 }
 
+                if ($request->has('search')) {
+                    $query->whereHas('customer', function ($query) use ($request) {
+                        $query->where('name', 'like', '%' . $request->get('search')['value'] . '%');
+                    })
+                        ->orWhere('number', 'like', '%' . $request->get('search')['value'] . '%')
+                        ->orWhere('employee', 'like', '%' . $request->get('search')['value'] . '%');
+                }
                 // if ($request->has('customer')) {
                 //     $query->whereHas('customer', function ($query) use ($request) {
                 //         $query->where('name', 'like', '%' . $request->get('customer') . '%');

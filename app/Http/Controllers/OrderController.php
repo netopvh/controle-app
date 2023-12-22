@@ -90,9 +90,32 @@ class OrderController extends Controller
             'status' => $request->get('status'),
         ]);
 
+        session()->flash('success', 'Status atualizado com sucesso!');
         return response()->json([
             'success' => true,
             'message' => 'Status atualizado com sucesso!',
+        ]);
+    }
+
+    public function updateEmployee(Request $request, $id)
+    {
+        $request->validate([
+            'employee' => 'required|string|max:255',
+        ], [
+            'employee.string' => 'O campo funcionário deve ser uma string.',
+            'employee.max' => 'O campo funcionário deve ter no máximo 255 caracteres.',
+        ]);
+
+        $order = Order::query()->findOrFail($id);
+
+        $order->update([
+            'employee' => $request->get('employee'),
+        ]);
+
+        session()->flash('success', 'Arte Finalista atualizado com sucesso!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Arte Finalista atualizado com sucesso!',
         ]);
     }
 }

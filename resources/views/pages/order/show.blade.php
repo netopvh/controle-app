@@ -5,6 +5,7 @@
 
 @section('js')
     <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#upload-preview').submit(function(e) {
@@ -67,7 +68,7 @@
                 })
             });
 
-            $('.dropdown-item').click(function() {
+            $('.dropdown-item.status').click(function() {
                 var status = $(this).data('value');
                 $.ajax({
                     url: "{{ route('dashboard.order.update.status', "$order->id") }}",
@@ -96,6 +97,77 @@
                     }
                 })
             });
+
+            $('.dropdown-item.employee').click(function() {
+                var status = $(this).data('value');
+                $.ajax({
+                    url: "{{ route('dashboard.order.update.employee', "$order->id") }}",
+                    method: "POST",
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        employee: status
+                    },
+                    dataType: 'JSON',
+                    beforeSend: function() {
+                        $('#status-dropdown').html(
+                            '<div class="spinner-border spinner-border-sm text-white" role="status">' +
+                            '<span class="visually-hidden">Loading...</span>' +
+                            '</div>'
+                        );
+                    },
+                    success: function(data) {
+                        location.reload();
+                    },
+                    error: function(data) {
+                        console.log(data);
+                        // $('#status-dropdown').html(
+                        //     '<i class="fa fa-fw fa-chevron-down text-white me-1"></i>' +
+                        //     '<span class="d-none d-sm-inline">Alterar Status</span>'
+                        // );
+                    }
+                })
+            });
+
+            @if (session('success'))
+                jQuery.notify({
+                    icon: 'fa fa-fw fa-check',
+                    message: '{{ session('success') }}'
+                }, {
+                    element: 'body',
+                    type: 'success',
+                    placement: {
+                        from: 'top',
+                        align: 'right'
+                    },
+                    allow_dismiss: true,
+                    newest_on_top: true,
+                    showProgressbar: false,
+                    offset: 20,
+                    spacing: 10,
+                    z_index: 1033,
+                    delay: 5000,
+                    timer: 1000,
+                    animate: {
+                        enter: 'animated fadeIn',
+                        exit: 'animated fadeOutDown'
+                    },
+                    template: `<div data-notify="container" class="col-11 col-sm-4 alert alert-{0} alert-dismissible" role="alert">
+                        <p class="mb-0">
+                            <span data-notify="icon"></span>
+                            <span data-notify="title">{1}</span>
+                            <span data-notify="message">{2}</span>
+                        </p>
+                        <div class="progress" data-notify="progressbar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar progress-bar-{0}" style="width: 0%;"></div>
+                        </div>
+                        <a href="{3}" target="{4}" data-notify="url"></a>
+                        <a class="p-2 m-1 text-dark" href="javascript:void(0)" aria-label="Close" data-notify="dismiss">
+                            <i class="fa fa-times"></i>
+                        </a>
+                        </div>
+                        `
+                });
+            @endif
         });
     </script>
 @endsection
@@ -126,7 +198,7 @@
                     <span class="d-none d-sm-inline">Editar</span>
                 </button>
             </div>
-            <div class="">
+            <div class="me-2">
                 <div class="dropdown">
                     @php
                         $color = 'btn-primary';
@@ -146,14 +218,41 @@
                             Aguardando Aprov.
                         @elseif ($order->status == 'aguard. arte')
                             Aguardando Arte
+                        @else
+                            Status não definido
                         @endif
                     </button>
                     <div class="dropdown-menu fs-sm" aria-labelledby="dropdown-default-primary">
-                        <a class="dropdown-item" data-value="aprovado" href="javascript:void(0)">Aprovado</a>
+                        <a class="dropdown-item status" data-value="aprovado" href="javascript:void(0)">Aprovado</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" data-value="aguard. aprov" href="javascript:void(0)">Aguardando Aprov.</a>
+                        <a class="dropdown-item status" data-value="aguard. aprov" href="javascript:void(0)">Aguardando
+                            Aprov.</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" data-value="aguard. arte" href="javascript:void(0)">Aguardando Arte</a>
+                        <a class="dropdown-item status" data-value="aguard. arte" href="javascript:void(0)">Aguardando
+                            Arte</a>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-warning dropdown-toggle" id="employee-dropdown"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @if ($order->employee == 'bruno')
+                            Bruno
+                        @elseif ($order->employee == 'ricardo')
+                            Ricardo
+                        @elseif ($order->employee == 'rubens')
+                            Rubens
+                        @else
+                            Arte finalista não definido
+                        @endif
+                    </button>
+                    <div class="dropdown-menu fs-sm" aria-labelledby="dropdown-default-primary">
+                        <a class="dropdown-item employee" data-value="bruno" href="javascript:void(0)">Bruno</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item employee" data-value="ricardo" href="javascript:void(0)">Ricardo</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item employee" data-value="rubens" href="javascript:void(0)">Rubens</a>
                     </div>
                 </div>
             </div>

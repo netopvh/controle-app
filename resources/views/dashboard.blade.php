@@ -51,7 +51,7 @@
                         </div>
                         <div class="text-end">
                             <div class="fs-3 fw-semibold">{{ $waitingApproval }}</div>
-                            <div class="fs-sm fw-semibold text-uppercase text-muted">Aguardando Aprov.</div>
+                            <div class="fs-sm fw-semibold text-uppercase text-muted">Aguard. Aprov.</div>
                         </div>
                     </div>
                 </a>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="text-end">
                             <div class="fs-3 fw-semibold">{{ $waitingArt }}</div>
-                            <div class="fs-sm fw-semibold text-uppercase text-muted">Aguardando Arte</div>
+                            <div class="fs-sm fw-semibold text-uppercase text-muted">Aguard. Arte</div>
                         </div>
                     </div>
                 </a>
