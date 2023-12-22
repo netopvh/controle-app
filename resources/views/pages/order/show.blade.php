@@ -109,7 +109,37 @@
                     },
                     dataType: 'JSON',
                     beforeSend: function() {
-                        $('#status-dropdown').html(
+                        $('#employee-dropdown').html(
+                            '<div class="spinner-border spinner-border-sm text-white" role="status">' +
+                            '<span class="visually-hidden">Loading...</span>' +
+                            '</div>'
+                        );
+                    },
+                    success: function(data) {
+                        location.reload();
+                    },
+                    error: function(data) {
+                        console.log(data);
+                        // $('#status-dropdown').html(
+                        //     '<i class="fa fa-fw fa-chevron-down text-white me-1"></i>' +
+                        //     '<span class="d-none d-sm-inline">Alterar Status</span>'
+                        // );
+                    }
+                })
+            });
+
+            $('.dropdown-item.arrived').click(function() {
+                var status = $(this).data('value');
+                $.ajax({
+                    url: "{{ route('dashboard.order.update.arrived', "$order->id") }}",
+                    method: "POST",
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        arrived: status
+                    },
+                    dataType: 'JSON',
+                    beforeSend: function() {
+                        $('#arrived-dropdown').html(
                             '<div class="spinner-border spinner-border-sm text-white" role="status">' +
                             '<span class="visually-hidden">Loading...</span>' +
                             '</div>'
@@ -187,15 +217,15 @@
 
         <div class="d-flex flex-row">
             <div class="me-2">
-                <a href="{{ route('dashboard.index') }}" class="btn btn-danger">
+                <a href="{{ route('dashboard.index') }}" class="btn bg-flat">
                     <i class="fa fa-fw fa-chevron-left text-white me-1"></i>
-                    <span class="d-none d-sm-inline">Voltar</span>
+                    <span class="d-none d-sm-inline text-white">Voltar</span>
                 </a>
             </div>
             <div class="me-2">
-                <button type="button" class="btn btn-secondary">
+                <button type="button" class="btn bg-gray-dark">
                     <i class="fa fa-fw fa-pen text-white me-1"></i>
-                    <span class="d-none d-sm-inline">Editar</span>
+                    <span class="d-none d-sm-inline text-white">Editar</span>
                 </button>
             </div>
             <div class="me-2">
@@ -233,10 +263,20 @@
                     </div>
                 </div>
             </div>
-            <div class="">
+            <div class="me-2">
                 <div class="dropdown">
-                    <button type="button" class="btn btn-warning dropdown-toggle" id="employee-dropdown"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @php
+                        $bgColor = 'btn-primary';
+                        if ($order->employee == 'bruno') {
+                            $bgColor = 'bg-elegance';
+                        } elseif ($order->employee == 'ricardo') {
+                            $bgColor = 'bg-pulse';
+                        } elseif ($order->employee == 'rubens') {
+                            $bgColor = 'bg-flat';
+                        }
+                    @endphp
+                    <button type="button" class="btn {{ $bgColor }} dropdown-toggle text-white"
+                        id="employee-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @if ($order->employee == 'bruno')
                             Bruno
                         @elseif ($order->employee == 'ricardo')
@@ -253,6 +293,31 @@
                         <a class="dropdown-item employee" data-value="ricardo" href="javascript:void(0)">Ricardo</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item employee" data-value="rubens" href="javascript:void(0)">Rubens</a>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="dropdown">
+                    @php
+                        $bgColorArrived = 'btn-primary';
+                        if ($order->arrived) {
+                            $bgColorArrived = 'btn-success';
+                        } else {
+                            $bgColorArrived = 'btn-danger';
+                        }
+                    @endphp
+                    <button type="button" class="btn {{ $bgColorArrived }} dropdown-toggle text-white"
+                        id="arrived-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @if ($order->arrived)
+                            Chegou
+                        @else
+                            Não Chegou
+                        @endif
+                    </button>
+                    <div class="dropdown-menu fs-sm" aria-labelledby="dropdown-default-primary">
+                        <a class="dropdown-item arrived" data-value="1" href="javascript:void(0)">Chegou</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item arrived" data-value="0" href="javascript:void(0)">Não Chegou</a>
                     </div>
                 </div>
             </div>

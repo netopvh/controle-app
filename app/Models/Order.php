@@ -18,6 +18,7 @@ class Order extends Model
         'status',
         'preview',
         'design_file',
+        'arrived',
     ];
 
     protected $casts = [

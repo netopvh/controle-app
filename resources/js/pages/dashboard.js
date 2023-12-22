@@ -100,6 +100,7 @@ class pageDashboard {
         { data: 'customer.name', name: 'customer.name' },
         { data: 'status', name: 'status' },
         { data: 'employee', name: 'employee' },
+        { data: 'arrived', name: 'arrived' },
         { data: 'delivery_date', name: 'delivery_date' },
         { data: 'action', name: 'action', orderable: false, searchable: false}
       ],

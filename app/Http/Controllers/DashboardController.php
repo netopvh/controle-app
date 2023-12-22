@@ -70,13 +70,16 @@ class DashboardController extends Controller
             ->editColumn('employee', function ($model) {
                 return $model->employee ? strtoupper($model->employee) : 'Não definido';
             })
+            ->editColumn('arrived', function ($model) {
+                return $model->arrived ? '<span class="badge bg-success">Chegou</span>' : '';
+            })
             ->addColumn('action', function ($model) {
                 return '<a href="' . route('dashboard.order.show', $model->id) . '" class="btn btn-sm btn-primary"><i class="fa fa-eye" /></a>';
             })
             ->with('totalApproved', Order::query()->where('status', 'aprovado')->count())
             ->with('totalWaitingApproval', Order::query()->where('status', 'aguard. aprov')->count())
             ->with('totalWaitingArt', Order::query()->where('status', 'aguard. arte')->count())
-            ->rawColumns(['status', 'action'])
+            ->rawColumns(['status', 'arrived', 'action'])
             ->make(true);
     }
 }

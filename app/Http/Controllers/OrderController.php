@@ -118,4 +118,26 @@ class OrderController extends Controller
             'message' => 'Arte Finalista atualizado com sucesso!',
         ]);
     }
+
+    public function updateArrived(Request $request, $id)
+    {
+        $request->validate([
+            'arrived' => 'required|boolean',
+        ], [
+            'arrived.required' => 'O campo chegou é obrigatório.',
+            'arrived.boolean' => 'O campo chegou deve ser um booleano.',
+        ]);
+
+        $order = Order::query()->findOrFail($id);
+
+        $order->update([
+            'arrived' => $request->get('arrived'),
+        ]);
+
+        session()->flash('success', 'Chegou atualizado com sucesso!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Chegou atualizado com sucesso!',
+        ]);
+    }
 }

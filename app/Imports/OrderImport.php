@@ -43,6 +43,7 @@ class OrderImport implements ToCollection, WithHeadingRow, WithBatchInserts
                                 'number' => $row['pedido'],
                                 'status' => $row['status'],
                                 'delivery_date' => $deliveryDate,
+                                'arrived' => $row['mercadoria'] === 'CHEGOU' ? true : false,
                             ]);
 
                             $order->orderProducts()->create([
@@ -70,6 +71,7 @@ class OrderImport implements ToCollection, WithHeadingRow, WithBatchInserts
                             'number' => $row['pedido'],
                             'status' => $row['status'],
                             'delivery_date' => $deliveryDate,
+                            'arrived' => $row['mercadoria'] === 'CHEGOU' ? true : false,
                         ]);
 
                         $order->orderProducts()->create([

@@ -8,10 +8,29 @@
     <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
     <script src="{{ asset('js/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
+        function addRow() {
+            var newRow = `<tr>
+                    <td><input type="text" class="form-control" name="product[]" /></td>
+                    <td><input type="text" class="form-control" name="quantity[]" /></td>
+                    <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remover</button></td>
+                  </tr>`;
+            jQuery('#productTable tbody').append(newRow);
+        }
+
+        function removeRow(button) {
+            jQuery(button).closest('tr').remove();
+        }
+
         jQuery(function() {
+
             // Select2
             jQuery('.customer-select').select2({
                 placeholder: 'Selecione um cliente..',
+                allowClear: true
+            });
+
+            jQuery('#employee').select2({
+                placeholder: 'Selecione o Arte Finalista..',
                 allowClear: true
             });
 
@@ -37,15 +56,15 @@
                 <h3 class="block-title">Cadastro de Pedido em Produção</h3>
             </div>
             <div class="block-content">
-                <div class="row push">
-                    <div class="col-lg-4">
-                        <p class="fw-bold">
-                            Informações Gerais
-                        </p>
-                    </div>
-                    <div class="col-lg-8">
-                        <!-- Form Grid -->
-                        <form action="be_forms_layouts.html" method="POST" onsubmit="return false;">
+                <form action="#" method="POST" onsubmit="return false;">
+                    <div class="row push">
+                        <div class="col-lg-3">
+                            <p class="fw-bold">
+                                Informações Gerais
+                            </p>
+                        </div>
+                        <div class="col-lg-9">
+                            <!-- Form Grid -->
                             <div class="row mb-4">
                                 <div class="col-12">
                                     <select class="customer-select form-select" id="customer_id" name="customer_id"
@@ -61,156 +80,68 @@
                                 </div>
                             </div>
                             <div class="row mb-4">
-                                <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="col-4">
+                                <div class="col-3">
+                                    <input type="text" placeholder="Data da Emissão" class="form-control">
                                 </div>
-                                <div class="col-8">
-                                    <input type="text" class="form-control" placeholder="col-8">
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-5">
-                                    <input type="text" class="form-control" placeholder="col-5">
+                                <div class="col-2">
+                                    <input type="text" placeholder="N. do Pedido" class="form-control">
                                 </div>
                                 <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="col-4">
+                                    <select name="employee" id="employee" class="form-control" placeholder="Vendedor">
+                                        <option value=""></option>
+                                        <option value="bruno">Bruno</option>
+                                        <option value="ricardo">Ricardo</option>
+                                        <option value="rubens">Rubens</option>
+                                    </select>
                                 </div>
                                 <div class="col-3">
-                                    <input type="text" class="form-control" placeholder="col-3">
+                                    <input type="text" placeholder="Data da Entrega" class="form-control">
                                 </div>
                             </div>
-                            <div class="row mb-4">
-                                <div class="col-3">
-                                    <input type="text" class="form-control form-control-alt" placeholder="col-3">
-                                </div>
-                                <div class="col-3">
-                                    <input type="text" class="form-control form-control-alt" placeholder="col-3">
-                                </div>
-                                <div class="col-3">
-                                    <input type="text" class="form-control form-control-alt" placeholder="col-3">
-                                </div>
-                                <div class="col-3">
-                                    <input type="text" class="form-control form-control-alt" placeholder="col-3">
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-8">
-                                    <input type="text" class="form-control form-control-alt" placeholder="col-8">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control form-control-alt" placeholder="col-4">
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-3">
-                                    <input type="text" class="form-control form-control-alt" placeholder="col-3">
-                                </div>
-                                <div class="col-6">
-                                    <input type="text" class="form-control form-control-alt" placeholder="col-6">
-                                </div>
-                                <div class="col-3">
-                                    <input type="text" class="form-control form-control-alt" placeholder="col-3">
-                                </div>
-                            </div>
-                        </form>
-                        <!-- END Form Grid -->
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <p class="fw-bold">
-                            Produtos
-                        </p>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <p class="fw-bold">
+                                Produtos
+                            </p>
+                        </div>
+                        <div class="col-lg-9">
+                            <table class="table table-bordered" id="productTable">
+                                <thead>
+                                    <tr>
+                                        <th>Produto</th>
+                                        <th style="width: 150px">Quantidade</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-control" name="product[]" /></td>
+                                        <td><input type="text" class="form-control" name="qtd[]" /></td>
+                                        <td><button type="button" class="btn btn-danger"
+                                                onclick="removeRow(this)">Remover</button></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4" class="text-end">
+                                            <button type="button" class="btn btn-success" onclick="addRow()">Adicionar
+                                                Produto</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
-                    <div class="col-lg-8">
-                        <!-- Form Grid with Labels -->
-                        <form action="be_forms_layouts.html" method="POST" onsubmit="return false;">
-                            <div class="row mb-4">
-                                <div class="col-4">
-                                    <label class="form-label">.col-4</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="col-4">
-                                    <label class="form-label">.col-4</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="col-4">
-                                    <label class="form-label">.col-4</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-4">
-                                    <label class="form-label">.col-4</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="col-8">
-                                    <label class="form-label">.col-8</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-5">
-                                    <label class="form-label">.col-5</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="col-4">
-                                    <label class="form-label">.col-4</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="col-3">
-                                    <label class="form-label">.col-3</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-3">
-                                    <label class="form-label">.col-3</label>
-                                    <input type="text" class="form-control form-control-alt">
-                                </div>
-                                <div class="col-3">
-                                    <label class="form-label">.col-3</label>
-                                    <input type="text" class="form-control form-control-alt">
-                                </div>
-                                <div class="col-3">
-                                    <label class="form-label">.col-3</label>
-                                    <input type="text" class="form-control form-control-alt">
-                                </div>
-                                <div class="col-3">
-                                    <label class="form-label">.col-3</label>
-                                    <input type="text" class="form-control form-control-alt">
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-8">
-                                    <label class="form-label">.col-8</label>
-                                    <input type="text" class="form-control form-control-alt">
-                                </div>
-                                <div class="col-4">
-                                    <label class="form-label">.col-4</label>
-                                    <input type="text" class="form-control form-control-alt">
-                                </div>
-                            </div>
-                            <div class="row mb-4">
-                                <div class="col-3">
-                                    <label class="form-label">.col-3</label>
-                                    <input type="text" class="form-control form-control-alt">
-                                </div>
-                                <div class="col-6">
-                                    <label class="form-label">.col-6</label>
-                                    <input type="text" class="form-control form-control-alt">
-                                </div>
-                                <div class="col-3">
-                                    <label class="form-label">.col-3</label>
-                                    <input type="text" class="form-control form-control-alt">
-                                </div>
-                            </div>
-                        </form>
-                        <!-- END Form Grid with Labels -->
+                    <div class="d-flex row mb-2">
+                        <button type="submit" class="btn btn-success col-md-2">Salvar</button>
+                        <a class="btn btn-warning col-md-2 ms-1" href="{{ route('dashboard.index') }}">Voltar</a>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
+    </div>
     </div>
     <!-- END Page Content -->
 @endsection
