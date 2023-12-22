@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -20,6 +21,56 @@ class OrderController extends Controller
         $order = Order::query()->with(['customer', 'orderProducts'])->findOrFail($id);
 
         return view('pages.order.show', compact('order'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'date' => 'required',
+            'number' => 'required|numeric',
+            'delivery_date' => 'required',
+            'product' => 'required|array',
+            'product.*.name' => 'required|string|max:255',
+            'product.*.qtd' => 'required|numeric|min:0.01',
+        ], [
+            'customer_id.required' => 'O campo cliente é obrigatório.',
+            'customer_id.exists' => 'O campo cliente deve ser um cliente válido.',
+            'date.required' => 'O campo emissão é obrigatório.',
+            'date.date' => 'O campo emissão deve ser uma data válida.',
+            'number.required' => 'O campo pedido é obrigatório.',
+            'number.numeric' => 'O campo pedido deve ser um número.',
+            'delivery_date.required' => 'O campo data de entrega é obrigatório.',
+            'delivery_date.date' => 'O campo data de entrega deve ser uma data válida.',
+            'product.required' => 'O campo produto é obrigatório.',
+            'product.array' => 'O campo produto deve ser um array.',
+            'product.*.name.required' => 'O campo nome é obrigatório.',
+            'product.*.name.string' => 'O campo nome deve ser uma string.',
+            'product.*.name.max' => 'O campo nome deve ter no máximo 255 caracteres.',
+            'product.*.qtd.required' => 'O campo quantidade é obrigatório.',
+            'product.*.qtd.numeric' => 'O campo quantidade deve ser um número.',
+            'product.*.qtd.min' => 'O campo quantidade deve ser no mínimo 0.01.',
+        ]);
+
+
+        $customer = Customer::query()->findOrFail($request->get('customer_id'));
+
+        $order = $customer->orders()->create([
+            'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->format('Y-m-d'),
+            'number' => $request->get('number'),
+            'delivery_date' => Carbon::createFromFormat('d/m/Y', $request->get('delivery_date'))->format('Y-m-d'),
+            'status' => 'aguard. arte',
+        ]);
+
+        foreach ($request->get('product') as $product) {
+            $order->orderProducts()->create([
+                'name' => $product['name'],
+                'qtd' => $product['qtd']
+            ]);
+        }
+
+        session()->flash('success', 'Pedido criado com sucesso!');
+        return redirect()->back();
     }
 
     public function uploadPreview(Request $request, $id)

@@ -443,6 +443,7 @@
     </div>
     <!-- END Page Container -->
     @vite('resources/js/codebase/app.js')
+    <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
     @yield('js')
 </body>
 

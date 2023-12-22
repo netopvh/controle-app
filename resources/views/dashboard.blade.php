@@ -84,7 +84,7 @@
                         <fieldset class="border px-2 pb-2 mb-2">
                             <legend class="float-none w-auto px-4 h5">Filtros</legend>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-6 col-xl-4">
                                     <div class="form-group">
                                         <label for="filterByStatus" class="fw-bold mb-1">Filtrar por status</label>
                                         <select class="form-control" id="filterByStatus">
@@ -95,7 +95,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-6 col-xl-4">
                                     <div class="form-group">
                                         <label for="filterByMonth" class="fw-bold mb-1">Filtrar por mês</label>
                                         <select class="form-control" id="filterByMonth">
@@ -115,7 +115,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-xl-4">
+                                <div class="col-md-6 col-xl-4">
                                     <div class="mb-4">
                                         <label for="filterByMonth" class="fw-bold mb-1">Filtrar por data</label>
                                         <div class="input-daterange input-group" data-date-format="dd/mm/yyyy"
@@ -132,26 +132,33 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-4 col-xl-2">
+                                    <button type="button" class="btn btn-primary btn-block" id="btnCleanFilters">
+                                        <i class="fa fa-fw fa-broom mr-1"></i> Limpar Filtros
+                                    </button>
+                                </div>
                             </div>
                         </fieldset>
-                        <table
-                            class="table table-bordered table-striped table-vcenter js-dataTable-responsive list-latest">
-                            <thead>
-                                <tr>
-                                    <th style="width: 8%;"></th>
-                                    <th style="width: 120px;">Data</th>
-                                    <th style="width: 100px;">Pedido</th>
-                                    <th>Cliente</th>
-                                    <th class="text-center" style="width: 110px">Status</th>
-                                    <th class="text-center" style="width: 20%;">Arte Finalista</th>
-                                    <th class="text-center" style="width: 100px;">Mercadoria</th>
-                                    <th style="width: 120px;">Entrega</th>
-                                    <th class="text-center" style="width: 10%;">Ação</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table
+                                class="table table-bordered table-striped table-vcenter js-dataTable-responsive list-latest">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 8%;"></th>
+                                        <th style="width: 120px;">Data</th>
+                                        <th style="width: 100px;">Pedido</th>
+                                        <th>Cliente</th>
+                                        <th class="text-center" style="width: 110px">Status</th>
+                                        <th class="text-center" style="width: 20%;">Arte Finalista</th>
+                                        <th class="text-center" style="width: 100px;">Mercadoria</th>
+                                        <th style="width: 120px;">Entrega</th>
+                                        <th class="text-center" style="width: 10%;">Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

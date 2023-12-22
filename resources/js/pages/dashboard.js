@@ -35,7 +35,8 @@ class pageDashboard {
         buttons: {
           copy: "Copiar",
           print: "Imprimir"
-        }
+        },
+        infoFiltered: "(Filtrados de _MAX_ registros)",
       }
     });
 
@@ -111,6 +112,14 @@ class pageDashboard {
     });
 
     jQuery('#filterByMonth').on('change', function () {
+      table.draw();
+    });
+
+    jQuery('#btnCleanFilters').on('click', function () {
+      $('#filterByStatus').val('all');
+      $('#filterByMonth').val('all');
+      $('#from').val('');
+      $('#to').val('');
       table.draw();
     });
 
